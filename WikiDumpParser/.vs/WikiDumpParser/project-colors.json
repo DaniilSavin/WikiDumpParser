@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "bd29d725-ecbe-43d7-bc13-80325dfbae55": {
+      "ProjectGuid": "bd29d725-ecbe-43d7-bc13-80325dfbae55",
+      "DisplayName": "Demo",
+      "ColorIndex": 0
+    },
+    "9b5ae22e-e74d-4005-b460-fb418c5a6e57": {
+      "ProjectGuid": "9b5ae22e-e74d-4005-b460-fb418c5a6e57",
+      "DisplayName": "WikiDumpParser",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}

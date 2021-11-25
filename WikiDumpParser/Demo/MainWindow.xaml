@@ -1,0 +1,29 @@
+﻿<Window x:Name="WikiDumpParser" x:Class="Demo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="170" Width="780" MinWidth="780" MinHeight="190" MaxWidth="780" MaxHeight="190" WindowStyle="ThreeDBorderWindow" Background="White" Title="WikiDumpParser" Closed="WDP_Closed" Loaded="WDP_Loaded" Icon="/icon.ico" ResizeMode="CanMinimize" TabIndex="0" WindowStartupLocation="CenterScreen">
+    <DockPanel Margin="0,0,10,0" Height="145" VerticalAlignment="Top">
+        <Grid x:Name="grid1" DockPanel.Dock="Top" Height="170" Margin="0,0,1,0" Width="780">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="181*"/>
+                <ColumnDefinition Width="459*"/>
+                <ColumnDefinition Width="105*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnCancel" Content="Стоп" Click="BtnCancel_Click" Margin="425,59,0,0" Height="20" VerticalAlignment="Top" Visibility="Visible" Grid.ColumnSpan="2" Cursor="Hand" Grid.Column="1" HorizontalAlignment="Left" Width="130" />
+            <TextBox x:Name="keyWords" Margin="119,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="18" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="626"/>
+            <Label x:Name="keyWordsLb" Content="Ключевые слова:" Margin="4,24,62,0" VerticalAlignment="Top" Height="24"/>
+            <Button x:Name="btnOpenFile" Content="Искать в файле" Click="BtnParse_Click" Margin="4,89,0,0" Cursor="Hand" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="116" Visibility="Visible" IsEnabled="False" >
+                <Button.Style>
+                    <Style/>
+                </Button.Style>
+            </Button>
+            <Button x:Name="btnDownloadFile1" Content="Искать" Margin="4,118,0,0" Click="btnDownloadFile1_Click" Cursor="Hand" ClickMode="Release" HorizontalAlignment="Left" Width="116" Height="20" VerticalAlignment="Top" IsEnabled="False"/>
+            <TextBlock x:Name="txtProgress" VerticalAlignment="Top" Margin="425,86,35,0" Grid.ColumnSpan="2" Grid.Column="1" />
+            <ProgressBar x:Name="progressBar" Height="16" Margin="4,4,0,0" VerticalAlignment="Top" Value="1" IsIndeterminate="True" Grid.ColumnSpan="3" HorizontalAlignment="Left" Width="741" Background="#FFE6E6E6"/>
+            <TextBlock x:Name="countPages" HorizontalAlignment="Left" Margin="170,4,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="110" Grid.Column="1"/>
+            <TextBlock x:Name="timer" HorizontalAlignment="Left" Margin="425,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1"/>
+            <Button x:Name="chooseSaveFolderBT" Content="Сохранить в" HorizontalAlignment="Left" Margin="4,59,0,0" Width="116" Click="chooseSaveFolderBT_Click" Height="20" VerticalAlignment="Top"/>
+            <TextBlock x:Name="pathTB" Margin="129,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="0.447,0.523" HorizontalAlignment="Left" Width="466" Grid.ColumnSpan="2"/>
+        </Grid>
+
+    </DockPanel>
+</Window>

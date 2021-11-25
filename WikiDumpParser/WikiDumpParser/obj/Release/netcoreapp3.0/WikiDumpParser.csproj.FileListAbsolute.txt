@@ -1,0 +1,10 @@
+D:\Python\WikiDumpParser-master\WikiDumpParser\bin\Release\netcoreapp3.0\WikiDumpParser.deps.json
+D:\Python\WikiDumpParser-master\WikiDumpParser\bin\Release\netcoreapp3.0\WikiDumpParser.dll
+D:\Python\WikiDumpParser-master\WikiDumpParser\bin\Release\netcoreapp3.0\WikiDumpParser.pdb
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.csproj.AssemblyReference.cache
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.GeneratedMSBuildEditorConfig.editorconfig
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.AssemblyInfoInputs.cache
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.AssemblyInfo.cs
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.csproj.CoreCompileInputs.cache
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.dll
+D:\Python\WikiDumpParser-master\WikiDumpParser\obj\Release\netcoreapp3.0\WikiDumpParser.pdb

@@ -1,0 +1,11 @@
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows\WikiDumpParser.deps.json
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows\ref\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows\WikiDumpParser.pdb
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.GeneratedMSBuildEditorConfig.editorconfig
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.AssemblyInfoInputs.cache
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.AssemblyInfo.cs
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.csproj.CoreCompileInputs.cache
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\ref\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.pdb
