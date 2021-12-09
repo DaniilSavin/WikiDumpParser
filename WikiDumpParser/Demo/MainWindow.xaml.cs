@@ -12,17 +12,33 @@ using System.Net;
 using Microsoft.Win32;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
+using System.Text.Json;
 
 namespace Demo
 {
+    //https://dumps.wikimedia.org/ruwiki/20211201/ruwiki-20211201-pages-articles-multistream.xml.bz2
+    //https://dumps.wikimedia.org/ruwiki/latest/ruwiki-latest-pages-articles.xml.bz2
+    //https://dumps.wikimedia.org/ruwiki/latest/ruwiki-latest-pages-articles-multistream.xml.bz2
+
+    public class Config
+    {
+
+        //public DateTimeOffset Date { get; set; }
+        public double count_pages { get; set; }
+    }
+
     public partial class MainWindow : Window
     {
-        DispatcherTimer _timer;
+        private readonly string URL = "https://dumps.wikimedia.org/ruwiki/latest/ruwiki-latest-pages-articles.xml.bz2";
+        DispatcherTimer _timer; string ConfigFileName = "config.json";
         TimeSpan _time; 
         string path; int pageCount = 0; int number_of_articles_found = 0; bool cancel = false;
         Dictionary<string, string> findedPages = new Dictionary<string, string>();
-        List<string> KeyWords = new List<string>(); bool findPages = false;
+        List<string> KeyWords = new List<string>();
         StreamWriter sw;
+        bool configLoaded = false; bool exit = false; bool ifCanceled = false;
+        Config config = new Config();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -42,21 +58,25 @@ namespace Demo
                         {
                             fileName = (string)fp.Key;
                             line = (string)fp.Value;
-                            if (line != "" && !line.Contains("#REDIRECT") && !line.Contains("#перенаправление") && !line.Contains("#redirect"))
+                            if (line != "" && line != " ")
                             {
                                 try
                                 {
                                     fileName = Regex.Replace(fileName, @"[/\\\|:""']", " ");
-                                    using (sw = new StreamWriter(path + @"\" + fileName + ".txt"))
+                                    if (!File.Exists(path + @"\" + fileName + ".txt"))
                                     {
-                                        sw.Write(line);
-                                        sw.Close();
-                                    }
+                                        using (sw = new StreamWriter(path + @"\" + fileName + ".txt"))
+                                        {
+                                            sw.Write(line);
+                                            sw.Close();
+                                        }
+                                    }                
                                 }
                                 catch (Exception e)
                                 {
                                     MessageBox.Show("Exception: " + e.Message);
                                 }
+                                //numberOfArticleWrited++;
                             }
                         }
                     }
@@ -80,68 +100,58 @@ namespace Demo
 
         private async Task ReadDumpFromFile(Stream inputStream)
         {
-            findPages = false;
             btnOpenFile.IsEnabled = false;
             btnDownloadFile1.IsEnabled = false;
             progressBar.Visibility = Visibility.Visible;
-
+            ifCanceled = false;
             try
             {
-                if (keyWords.Text != "")
-                {
-                    string[] tempKeyWordsStringA = keyWords.Text.Split(' ');
+                string[] tempKeyWordsStringA = keyWords.Text.Split(' ');
 
-                    for (int i = 0; i < tempKeyWordsStringA.Length; i++)
-                    {
-                        KeyWords.Add(tempKeyWordsStringA[i]);
-                    }
-                    findPages = true;
+                for (int i = 0; i < tempKeyWordsStringA.Length; i++)
+                {
+                    KeyWords.Add(tempKeyWordsStringA[i]);
                 }
 
                 using (BZip2InputStream stream = new BZip2InputStream(inputStream))
                 {
                     Parser parser = Parser.Create(stream);
+                    number_of_articles_found = 0;
+                    
                     await Task.Run(() =>
                     {
                         RunTimer();
                         pageCount = 0;
+                        
                         Parallel.ForEach(parser.ReadPages(), (page, state) =>
                         {
+                            
                             if (cancel)
                             {
                                 cancel = false;
                                 _timer.Stop();
+                                ifCanceled = true;
                                 state.Break();
                             }
                             pageCount++;
-                            if (findPages)
+                            
+                            foreach (string keyWord in KeyWords)
                             {
-                                foreach (string keyWord in KeyWords)
+                                if (page.Title.ToLower().Contains(keyWord) && page.Text != "" && !page.Text.ToLower().Contains("#redirect") && !page.Text.ToLower().Contains("#перенаправление"))
                                 {
-                                    int i = 0;
-                                    if (page.Title.ToLower().Contains(keyWord))
-                                    {
-                                        findedPages.Add(page.Title.ToString(), page.Text.ToString());
-                                        number_of_articles_found++;
-                                        Dispatcher.BeginInvoke(() => { UpdateStatus(); });
-                                    }
-                                    i++;
+                                    findedPages.Add(page.Title, page.Text);
+                                    number_of_articles_found++;
+                                    Dispatcher.BeginInvoke(() => { UpdateStatus(); });
                                 }
-                               
-                            }
-                            else
-                            {
-                                //Debug.WriteLine(page.Title);
                             }
                             if (pageCount % 100 == 0)
                             {
                                 Dispatcher.BeginInvoke(() => { UpdateStatus(); });
                             }
-                        });
-
+                        });                       
                     });
-
                     UpdateStatus();
+                    _timer.Stop();          
                 }
             }
             catch (OperationCanceledException) { }
@@ -156,31 +166,33 @@ namespace Demo
                 btnOpenFile.Visibility = Visibility.Visible;
                 btnDownloadFile1.Visibility = Visibility.Visible;
                 progressBar.Visibility = Visibility.Hidden;
+                if (!ifCanceled && !exit)
+                {
+                    await SaveConfig();
+                }
+                MessageBox.Show("Поиск завершен: найдено " + number_of_articles_found + " из " + pageCount + " статей." + "\nВремя: " + timer.Text, "Завершено");
             }
         }
 
         private async Task ProcessDump(Stream inputStream)
         {
-            findPages = false;
             btnOpenFile.IsEnabled = false;
             btnDownloadFile1.IsEnabled = false;
             progressBar.Visibility = Visibility.Visible;
 
             try
             {
-                if (keyWords.Text != "")
+                
+                string[] tempKeyWordsStringA = keyWords.Text.Split(' ');
+                for (int i = 0; i < tempKeyWordsStringA.Length; i++)
                 {
-                    string[] tempKeyWordsStringA = keyWords.Text.Split(' ');
-                    for (int i = 0; i < tempKeyWordsStringA.Length; i++)
-                    {
-                        KeyWords.Add(tempKeyWordsStringA[i]);
-                    }
-                    findPages = true;
+                    KeyWords.Add(tempKeyWordsStringA[i]);
                 }
 
                 using (BZip2InputStream stream = new BZip2InputStream(inputStream))
                 {
                     Parser parser = Parser.Create(stream);
+                    number_of_articles_found = 0;
                     await Task.Run(() =>
                     {
                         RunTimer();
@@ -194,50 +206,25 @@ namespace Demo
                                 break;
                             }
                             pageCount++;
-                            if (findPages)
+                            foreach (string keyWord in KeyWords)
                             {
-                                foreach (string keyWord in KeyWords)
+                                if (page.Title.ToLower().Contains(keyWord) && page.Text != "" && !page.Text.ToLower().Contains("#redirect") && !page.Text.ToLower().Contains("#перенаправление"))
                                 {
-                                    int i = 0;
-                                    if (page.Title.ToLower().Contains(keyWord))
-                                    {
-                                        findedPages.Add(page.Title, page.Text);
-                                        number_of_articles_found++;
-                                        Dispatcher.BeginInvoke(() => { UpdateStatus(); });
-                                    }
-                                    i++;
+                                    findedPages.Add(page.Title, page.Text);
+                                    number_of_articles_found++;
+                                    Dispatcher.BeginInvoke(() => { UpdateStatus(); });
                                 }
-                                string line = "";
-                                string fileName = "";
-                                foreach (KeyValuePair<string, string> fp in findedPages)
-                                {
-                                    fileName = fp.Key;
-                                    try
-                                    {
-                                        line = fp.Value;
-                                        sw = new StreamWriter(path +@"\"+ fileName + ".txt");
-                                        sw.Write(line);
-                                        sw.Close();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        MessageBox.Show("Exception: " + e.Message);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                //Debug.WriteLine(page.Title);
                             }
                             if (pageCount % 100 == 0)
                             {
                                 Dispatcher.BeginInvoke(() => { UpdateStatus(); });
+                                
                             }
+
                         }
-
                     });
-
                     UpdateStatus();
+                    _timer.Stop();    
                 }
             }
             catch (OperationCanceledException) { }
@@ -252,13 +239,68 @@ namespace Demo
                 btnOpenFile.Visibility = Visibility.Visible;
                 btnDownloadFile1.Visibility = Visibility.Visible;
                 progressBar.Visibility = Visibility.Hidden;
+                if (!ifCanceled && !exit)
+                {
+                    await SaveConfig();
+                }
+                MessageBox.Show("Поиск завершен: найдено " + number_of_articles_found + " из " + pageCount + " статей." + "\nВремя: " + timer.Text, "Завершено");
             }
         }
 
         private void UpdateStatus()
         {
-            txtProgress.Text = $"Pages: {pageCount}";
-            countPages.Text = $"Found: {number_of_articles_found}";
+            if (configLoaded && config.count_pages > pageCount)
+            {
+                progressBar.Value = Math.Truncate((100 * (double)pageCount) / config.count_pages);
+                countPages.Text = $"Найдено: {number_of_articles_found} | {progressBar.Value}%";
+            }
+            else
+            {
+                config.count_pages = pageCount;
+                progressBar.Value = 20;
+                progressBar.IsIndeterminate = true;
+                countPages.Text = $"Найдено: {number_of_articles_found}";
+            }
+            txtProgress.Text = $"Страниц: {pageCount}";         
+        }
+
+        private async Task SaveConfig ()
+        {
+            try
+            {
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                };
+                config.count_pages = pageCount;
+                using FileStream createStream = File.Create(ConfigFileName);
+                await JsonSerializer.SerializeAsync(createStream, config, options);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Ошибка сохранения конфига.\n" + ex.Message, "Error");
+            }
+        }
+        
+        private async Task LoadConfig()
+        {
+            try
+            {
+                if (File.Exists(ConfigFileName))
+                {
+                    using FileStream openStream = File.OpenRead(ConfigFileName);
+                    config = await JsonSerializer.DeserializeAsync<Config>(openStream);
+                    configLoaded = true;
+                }
+                else
+                {
+                    MessageBox.Show("Конфиг не найден, будет создан новый.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private async void BtnParse_Click(object sender, RoutedEventArgs e)
@@ -274,13 +316,15 @@ namespace Demo
                 {
                     return;
                 }
-
+                Thread _thread = new Thread(WriteToFile);
+                _thread.Start();
                 using (Stream fs = dlg.OpenFile())
                 {
+                    path2TB.Text = dlg.FileName;
                     chooseSaveFolderBT.IsEnabled = false;
                     btnCancel.IsEnabled = true;
-                    Thread _thread = new Thread(WriteToFile);
-                    _thread.Start();
+                    path2TB.Visibility = Visibility.Visible;
+                    path2TB.IsEnabled = true;
                     await ReadDumpFromFile(fs);
                 }
             }
@@ -290,7 +334,7 @@ namespace Demo
             }
         }
 
-        private void BtnDownloadFile_Click(object sender, RoutedEventArgs e){ }
+        private void BtnDownloadFile_Click(object sender, RoutedEventArgs e){}
 
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
@@ -304,11 +348,15 @@ namespace Demo
             {
                 btnCancel.IsEnabled = true;
                 chooseSaveFolderBT.IsEnabled = false;
-                HttpWebRequest request = WebRequest.Create("https://dumps.wikimedia.org/ruwiki/latest/ruwiki-latest-pages-articles.xml.bz2") as HttpWebRequest;
-                using (HttpWebResponse response = (HttpWebResponse)(request.GetResponse()))
-                using (Stream receiveStream = response.GetResponseStream())
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(URL);
+                Thread _thread = new Thread(WriteToFile);
+                _thread.Start();
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
                 {
-                    await ProcessDump(receiveStream);
+                    using (Stream receiveStream = response.GetResponseStream())
+                    {
+                        await ProcessDump(receiveStream);
+                    }
                 }
             }
             else
@@ -331,16 +379,17 @@ namespace Demo
                 pathTB.Text = path;
                 btnOpenFile.IsEnabled = true;
                 btnDownloadFile1.IsEnabled = true;
-                
+                pathTB.Visibility = Visibility.Visible;
             }
         }
 
         private void WDP_Closed(object sender, EventArgs e)
         {
+            exit = true;
             Environment.Exit(0);
         }
 
-        private void WDP_Loaded(object sender, RoutedEventArgs e)
+        private async void WDP_Loaded(object sender, RoutedEventArgs e)
         {           
             btnOpenFile.ToolTip = "Быстрее.";
             btnDownloadFile1.ToolTip = "Медленнее.";
@@ -350,6 +399,9 @@ namespace Demo
             keyWords.ToolTip = "Введите слова через пробел.";
             chooseSaveFolderBT.ToolTip = "Выбрать место для сохранения статей.";
             btnCancel.ToolTip = "Прекратить поиск.";
+            path2TB.Visibility = Visibility.Hidden;
+            pathTB.Visibility = Visibility.Hidden;
+            await LoadConfig();
         }
     }
 }

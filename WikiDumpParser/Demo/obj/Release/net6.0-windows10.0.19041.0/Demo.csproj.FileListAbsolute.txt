@@ -25,3 +25,5 @@ D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\WDP.dll
 D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\ref\WDP.dll
 D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\WDP.pdb
 D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\Demo.genruntimeconfig.cache
+D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\Demo.Properties.Resources.resources
+D:\Python\WikiDumpParser\Demo\obj\Release\net6.0-windows10.0.19041.0\Demo.csproj.GenerateResource.cache

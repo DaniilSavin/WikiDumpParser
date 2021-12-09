@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "mr02vcuwaB1EpXur6Vx1lK3gFJlERgJHaCirU29n3LSpilTKJB0ChIuHZfcXJfeYbbxBBqnzg95akVEN4fH1bA==",
+  "dgSpecHash": "q8iLcadNwpIp06ODZvisTLCp4JAICEnpONjy4mFhCBT5QbBdGfiUQkbpwizcsz3JHF+SQ6Tuqa2iIC8/z4PAjg==",
   "success": true,
   "projectFilePath": "D:\\Python\\WikiDumpParser\\WikiDumpParser\\WikiDumpParser.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\savin\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.21\\microsoft.windows.sdk.net.ref.10.0.19041.21.nupkg.sha512"
+  ],
   "logs": []
 }

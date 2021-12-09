@@ -1,0 +1,12 @@
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows10.0.19041.0\WikiDumpParser.deps.json
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows10.0.19041.0\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows10.0.19041.0\ref\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\bin\Release\net6.0-windows10.0.19041.0\WikiDumpParser.pdb
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.csproj.AssemblyReference.cache
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.GeneratedMSBuildEditorConfig.editorconfig
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.AssemblyInfoInputs.cache
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.AssemblyInfo.cs
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.csproj.CoreCompileInputs.cache
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\ref\WikiDumpParser.dll
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows10.0.19041.0\WikiDumpParser.pdb

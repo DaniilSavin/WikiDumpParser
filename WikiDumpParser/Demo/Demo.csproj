@@ -20,6 +20,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Exo2-Bold.ttf" />
+    <None Remove="Fonts\Exo2-Italic-VariableFont_wght.ttf" />
+    <None Remove="Fonts\Exo2-Thin.ttf" />
+    <None Remove="Fonts\Exo2-VariableFont_wght.ttf" />
+    <None Remove="Fonts\FuzzyBubbles-Bold.ttf" />
+    <None Remove="Fonts\FuzzyBubbles-Regular.ttf" />
     <None Remove="icon.ico" />
   </ItemGroup>
 
@@ -35,15 +41,31 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Exo2-Bold.ttf" />
+    <Resource Include="Fonts\Exo2-Italic-VariableFont_wght.ttf" />
+    <Resource Include="Fonts\Exo2-Thin.ttf" />
+    <Resource Include="Fonts\Exo2-VariableFont_wght.ttf" />
     <Resource Include="icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
 
   <ItemGroup>

@@ -9,3 +9,4 @@ D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParse
 D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.dll
 D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\ref\WikiDumpParser.dll
 D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.pdb
+D:\Python\WikiDumpParser\WikiDumpParser\obj\Release\net6.0-windows\WikiDumpParser.csproj.AssemblyReference.cache

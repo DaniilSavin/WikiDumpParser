@@ -1,0 +1,43 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "WikiDumpParser/1.0.0": {
+        "dependencies": {
+          "runtimepack.Microsoft.Windows.SDK.NET.Ref": "10.0.19041.21"
+        },
+        "runtime": {
+          "WikiDumpParser.dll": {}
+        }
+      },
+      "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.21": {
+        "runtime": {
+          "Microsoft.Windows.SDK.NET.dll": {
+            "assemblyVersion": "10.0.19041.21",
+            "fileVersion": "10.0.19041.21"
+          },
+          "WinRT.Runtime.dll": {
+            "assemblyVersion": "1.3.0.0",
+            "fileVersion": "1.3.5.36601"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "WikiDumpParser/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "runtimepack.Microsoft.Windows.SDK.NET.Ref/10.0.19041.21": {
+      "type": "runtimepack",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
